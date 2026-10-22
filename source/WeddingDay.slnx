@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="WeddingDay.AppHost/WeddingDay.AppHost.csproj" />
+  <Project Path="WeddingDay.Gateway/WeddingDay.Gateway.csproj" />
+  <Project Path="WeddingDay.ServiceDefaults/WeddingDay.ServiceDefaults.csproj" />
+</Solution>
