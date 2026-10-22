@@ -25,6 +25,7 @@ public static class Constants
         public const string RedisInsight = "redisinsight";
         public const string RabbitMq = "rabbitmq";
         public const string Mailpit = "mailpit";
+        public const string Keycloak = "keycloak";
     }
 
     public static class VolumeNames
@@ -35,6 +36,7 @@ public static class Constants
         public const string RedisInsight = $"{ProjectNameToLower}-{ResourceNames.RedisInsight}-data";
         public const string RabbitMq = $"{ProjectNameToLower}-{ResourceNames.RabbitMq}-data";
         public const string Mailpit = $"{ProjectNameToLower}-{ResourceNames.Mailpit}-data";
+        public const string Keycloak = $"{ProjectNameToLower}-{ResourceNames.Keycloak}-data";
     }
 
     public static class Ports
@@ -50,6 +52,7 @@ public static class Constants
         public const int MinioConsole = 9001;
         public const int MailpitSmtp = 1025;
         public const int MailpitHttp = 8025;
+        public const int Keycloak = 8080;
     }
 
     public static class MinioEndpoints
@@ -108,6 +111,14 @@ public static class Constants
             public const string DataPath = "/data";
             public const string Reference = $"{Registry}/{Image}:{Tag}";
         }
+
+        public static class Keycloak
+        {
+            public const string Registry = "quay.io";
+            public const string Image = "keycloak/keycloak";
+            public const string Tag = "26.7";
+            public const string Reference = $"{Registry}/{Image}:{Tag}";
+        }
     }
 
     #endregion
@@ -120,6 +131,7 @@ public static class Constants
         public const string SecretsDirectory = "secrets";
         public const string EnvFile = ".env";
         public const string ClientsDirectory = "clients";
+        public const string RealmsDirectory = "Keycloak/Realms";
     }
 
     public static class EnvKeys
@@ -146,6 +158,10 @@ public static class Constants
 
         // OpenTelemetry
         public const string OtlpEndpoint = "OTEL_EXPORTER_OTLP_ENDPOINT";
+
+        // Keycloak
+        public const string KeycloakAdminUser = "KEYCLOAK_ADMIN";
+        public const string KeycloakAdminPassword = "KEYCLOAK_ADMIN_PASSWORD";
     }
 
     public static class ParameterNames
@@ -158,6 +174,8 @@ public static class Constants
         public const string RabbitMqPassword = "rabbitmq-password";
         public const string RedisPassword = "redis-password";
         public const string OidcClientSecret = "oidc-client-secret";
+        public const string KeycloakAdminUser = "keycloak-admin-user";
+        public const string KeycloakAdminPassword = "keycloak-admin-password";
     }
 
     public static class OidcConfig
@@ -170,6 +188,13 @@ public static class Constants
         public const string AuthorityEnv = $"{Section}__{Authority}";
         public const string ClientIdEnv = $"{Section}__{ClientId}";
         public const string ClientSecretEnv = $"{Section}__{ClientSecret}";
+    }
+
+    public static class KeycloakConfig
+    {
+        public const string Realm = "weddingday";
+        public const string GatewayClientId = "weddingday-gateway";
+        public const string RolesClaim = "roles";
     }
 
     #endregion

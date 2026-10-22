@@ -16,6 +16,16 @@ var rabbitUser = Secret(ParameterNames.RabbitMqUser, EnvKeys.RabbitMqUser);
 var rabbitPassword = Secret(ParameterNames.RabbitMqPassword, EnvKeys.RabbitMqPassword);
 var redisPassword = Secret(ParameterNames.RedisPassword, EnvKeys.RedisPassword);
 var oidcClientSecret = Secret(ParameterNames.OidcClientSecret, EnvKeys.OidcClientSecret);
+var keycloakAdminUser = Secret(ParameterNames.KeycloakAdminUser, EnvKeys.KeycloakAdminUser);
+var keycloakAdminPassword = Secret(ParameterNames.KeycloakAdminPassword, EnvKeys.KeycloakAdminPassword);
+
+var keycloak = builder.AddKeycloak(ResourceNames.Keycloak, Ports.Keycloak, keycloakAdminUser, keycloakAdminPassword)
+    .WithImageRegistry(ContainerImages.Keycloak.Registry)
+    .WithImage(ContainerImages.Keycloak.Image)
+    .WithImageTag(ContainerImages.Keycloak.Tag)
+    .WithDataVolume(VolumeNames.Keycloak)
+    .WithRealmImport(Path.Combine(builder.AppHostDirectory, PathNames.RealmsDirectory))
+    .WithEnvironment(EnvKeys.OidcClientSecret, oidcClientSecret);
 
 var postgres = builder.AddPostgres(ResourceNames.Postgres, postgresUser, postgresPassword, Ports.Postgres)
     .WithImageRegistry(ContainerImages.Postgres.Registry)
@@ -58,6 +68,7 @@ var minio = builder.AddContainer(ResourceNames.Minio, ContainerImages.Minio.Imag
 
 var gateway = builder.AddProject<Projects.WeddingDay_Gateway>(ResourceNames.Gateway)
     .WithReference(redis).WaitFor(redis)
+    .WaitFor(keycloak)
     .WithEnvironment(OidcConfig.AuthorityEnv, EnvFile.Required(EnvKeys.OidcAuthority))
     .WithEnvironment(OidcConfig.ClientIdEnv, EnvFile.Required(EnvKeys.OidcClientId))
     .WithEnvironment(OidcConfig.ClientSecretEnv, oidcClientSecret)

@@ -1,0 +1,48 @@
+{
+  "realm": "weddingday",
+  "enabled": true,
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "sslRequired": "external",
+  "roles": {
+    "realm": [
+      { "name": "admin" },
+      { "name": "couple" },
+      { "name": "organizer" },
+      { "name": "coordinator" },
+      { "name": "vendor" },
+      { "name": "guest" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "weddingday-gateway",
+      "protocol": "openid-connect",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "${OIDC_CLIENT_SECRET}",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": [ "https://localhost:5101/signin-oidc" ],
+      "webOrigins": [ "https://localhost:5101" ],
+      "attributes": {
+        "post.logout.redirect.uris": "https://localhost:5101/signout-callback-oidc"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-flat",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "claim.name": "roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ]
+}
