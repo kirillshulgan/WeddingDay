@@ -197,6 +197,45 @@ public static class Constants
         public const string RolesClaim = "roles";
     }
 
+    public static class Roles
+    {
+        public const string Admin = "admin";
+        public const string Couple = "couple";
+        public const string Organizer = "organizer";
+        public const string Coordinator = "coordinator";
+        public const string Vendor = "vendor";
+        public const string Guest = "guest";
+
+        public static readonly string[] All = [Admin, Couple, Organizer, Coordinator, Vendor, Guest];
+        public static readonly string[] Staff = [Admin, Couple, Organizer, Coordinator];
+    }
+
+    public static class Policies
+    {
+        public const string AnyRole = "any-role";
+        public const string Staff = "staff";
+        public const string AdminOnly = "admin-only";
+    }
+
+    public static class AuthNames
+    {
+        public const string RolesClaimType = KeycloakConfig.RolesClaim;
+
+        public const string SessionStartItem = ".weddingday.session_start";
+        public const string SessionCookie = "__Host-WeddingDay.Session";
+        public const string CsrfHeader = "X-CSRF";
+        public const string CsrfHeaderValue = "1";
+    }
+
+    public static class BffPaths
+    {
+        public const string Prefix = "/bff";
+        public const string Login = $"{Prefix}/login";
+        public const string Logout = $"{Prefix}/logout";
+        public const string User = $"{Prefix}/user";
+        public const string Api = "/api";
+    }
+
     #endregion
 
     #region Observability
@@ -212,6 +251,15 @@ public static class Constants
     {
         public const string GatewayMeter = $"{ProjectName}.Gateway";
         public const string GatewayActivitySource = $"{ProjectName}.Gateway";
+        public const string LoginsMetric = "weddingday.gateway.auth.logins";
+        public const string LogoutsMetric = "weddingday.gateway.auth.logouts";
+        public const string ActiveSessionsMetric = "weddingday.gateway.auth.sessions.active";
+        public const string CsrfRejectedMetric = "weddingday.gateway.csrf.rejected";
+        public const string TokenRefreshMetric = "weddingday.gateway.auth.token_refresh";
+
+        public const string ResultTag = "result";
+        public const string SuccessValue = "success";
+        public const string FailureValue = "failure";
 
         public static readonly string[] FrameworkMeters =
         [
@@ -236,13 +284,43 @@ public static class Constants
 
     public static class ClientApps
     {
-        public sealed record ClientApp(string ResourceName, string DirectoryName);
+        public sealed record ClientApp(string ResourceName, string DirectoryName, string RoutePrefix);
 
-        public static readonly ClientApp[] All =
-        [
-            new("guest-web", "guest-web"),
-            new("admin-web", "admin-web")
-        ];
+        public static readonly ClientApp AuthClient = new("auth-client", "WeddingDay.AuthClient", "/auth");
+        public static readonly ClientApp Client = new("client", "WeddingDay.Client", "");
+
+        public static readonly ClientApp[] All = [AuthClient, Client];
+    }
+
+    #endregion
+
+    #region Auth
+
+    public static class SessionDefaults
+    {
+        public static readonly TimeSpan IdleTimeout = TimeSpan.FromHours(8);
+        public static readonly TimeSpan AbsoluteTimeout = TimeSpan.FromDays(7);
+    }
+
+    public static class RedisKeys
+    {
+        public const string TicketPrefix = $"{ProjectName}:session:";
+        public const string DataProtection = $"{ProjectName}:data-protection-keys";
+    }
+
+    public static class BffQuery
+    {
+        public const string ReturnUrl = "returnUrl";
+        public const string Error = "error";
+        public const string LoginFailed = "login_failed";
+    }
+
+    public static class ClaimNames
+    {
+        public const string PreferredUsername = "preferred_username";
+        public const string DisplayName = "name";
+        public const string Email = "email";
+        public const string Roles = KeycloakConfig.RolesClaim;
     }
 
     #endregion
