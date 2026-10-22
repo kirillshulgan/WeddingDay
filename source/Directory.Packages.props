@@ -1,6 +1,26 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <AspireVersion>13.6.3</AspireVersion>
+    <OtelVersion>1.20.1</OtelVersion>
   </PropertyGroup>
-
+  
+  <ItemGroup>
+    <!-- AppHost -->
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="$(AspireVersion)" />
+    
+    <!-- YARP -->
+    <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
+    
+    <!-- Service defaults -->
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.11.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.11.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="$(OtelVersion)" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OtelVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="$(OtelVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OtelVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="$(OtelVersion)" />
+  </ItemGroup>
 </Project>
