@@ -1,5 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.6.3">
-
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.6.3">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,4 +8,18 @@
     <UserSecretsId>6d9a2c03-59fb-437d-93b2-446d7134b6e6</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+    <PackageReference Include="Aspire.Hosting.Redis" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" />
+    <PackageReference Include="DotNetEnv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeddingDay.Gateway\WeddingDay.Gateway.csproj" />
+    <ProjectReference Include="..\WeddingDay.ServiceDefaults\WeddingDay.ServiceDefaults.csproj" IsAspireProjectResource="false" />
+  </ItemGroup>
+  
 </Project>
